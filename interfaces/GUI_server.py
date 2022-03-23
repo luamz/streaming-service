@@ -5,6 +5,7 @@ from tkinter.filedialog import askopenfile
 from shutil import copyfile
 from tkinter.ttk import Progressbar
 from PIL import Image, ImageTk
+from locale import *
 import cv2
 import imutils
 import os
@@ -19,8 +20,19 @@ class ServerGUI:
     def __init__(self):
         self.window = Tk()
         self.videos = None
+        self.current_language = 'EN'
 
-        self.logo = Frame(self.window)
+        self.header_frame = Frame(self.window)
+
+        self.language_frame = Frame(self.header_frame)
+        self.language_button = Button(self.language_frame, text="EN", width='1', height="1",
+                                      bg="#b36200", state=DISABLED, disabledforeground="#faddc8",
+                                      command=lambda: self.change_language("EN"))
+        self.language_button2 = Button(self.language_frame, text="PT", width='1', height="1",
+                                       bg="orange", foreground="white", disabledforeground="#faddc8",
+                                       command=lambda: self.change_language("PT"))
+
+        self.logo = Frame(self.header_frame)
         self.img = ImageTk.PhotoImage(Image.open(self.LOGO).resize((214, 120)))
         self.logo_panel = Label(self.logo, image=self.img)
         self.output_label = Label(self.window, text="")
@@ -32,13 +44,13 @@ class ServerGUI:
 
         self.menu_frame = Frame(self.window)
 
-        self.play_button = Button(self.menu_frame, text="Reproduzir Vídeo", width=12, height=2,
+        self.play_button = Button(self.menu_frame, text=PLAY_VIDEO.get(self.current_language), width=12, height=2,
                                   command=self.play_video, bg="orange")
-        self.add_video_button = Button(self.menu_frame, text="Adicionar Vídeo", width=12, height=2,
+        self.add_video_button = Button(self.menu_frame, text=ADD_VIDEO.get(self.current_language), width=12, height=2,
                                        command=self.add_video, bg="orange")
-        self.edit_video_button = Button(self.menu_frame, text="Editar Vídeo", width=12, height=2,
+        self.edit_video_button = Button(self.menu_frame, text=UPDATE_VIDEO.get(self.current_language), width=12, height=2,
                                         command=self.update_video, bg="orange")
-        self.remove_video_button = Button(self.menu_frame, text="Remover Vídeo", width=12, height=2,
+        self.remove_video_button = Button(self.menu_frame, text=REMOVE_VIDEO.get(self.current_language), width=12, height=2,
                                           command=self.delete_video, bg="orange")
 
         # ------------------
@@ -56,9 +68,18 @@ class ServerGUI:
         self.window.configure(background='white')
         self.window.geometry(str(self.WIDTH) + "x" + str(self.HEIGHT))
 
-        self.logo.pack(padx=(0, 40), pady=(0, 10))
+        self.header_frame.pack()
+        self.header_frame.configure(background='white')
+
+        self.logo.pack(padx=(200, 50), pady=(0, 10), side=LEFT)
         self.logo_panel.pack()
         self.logo_panel.configure(background='white')
+
+        self.language_frame.pack(padx=(70, 0), pady=(10, 0))
+        self.language_frame.configure(background='white')
+        self.language_button.pack(side=LEFT)
+        self.language_button2.pack()
+
 
         self.output_label.pack(padx=(0, 40))
         self.output_label.configure(background='white')
@@ -124,7 +145,7 @@ class ServerGUI:
             id_video, name, resolution, path = self.table_view.item(selected, 'value')
             self.video_stream(name, resolution, path)
         else:
-            self.output_label.config(text='Nenhum vídeo selecionado!', foreground='red')
+            self.output_label.config(text=NO_VIDEO.get(self.current_language), foreground='red')
 
     @staticmethod
     def video_stream(name, resolution, path):
@@ -154,8 +175,9 @@ class ServerGUI:
             os.remove(f'../videos/{resolution}/{name}')
             delete_video_transaction(id_video)
             self.refresh_list_videos()
+            self.output_label.config(text=VIDEO_REMOVED.get(self.current_language), foreground='green')
         else:
-            self.output_label.config(text='Nenhum vídeo selecionado!', foreground='red')
+            self.output_label.config(text=NO_VIDEO.get(self.current_language), foreground='red')
 
     def add_video(self):
         self.output_label.config(text='')
@@ -168,7 +190,7 @@ class ServerGUI:
             id_video, name, resolution, path = self.table_view.item(selected, 'value')
             self.initialize_add_video_window("UPDATE", id_video, name, resolution, path)
         else:
-            self.output_label.config(text='Nenhum vídeo selecionado!', foreground='red')
+            self.output_label.config(text=NO_VIDEO.get(self.current_language), foreground='red')
 
     def initialize_add_video_window(self, transaction, id_video="", name="", resolution="", path=""):
         self.transaction = transaction
@@ -179,18 +201,18 @@ class ServerGUI:
         self.resolution = resolution
         self.path = path
 
-        self.name_label = Label(self.add_video_window, text="Nome do Vídeo: ")
+        self.name_label = Label(self.add_video_window, text=VIDEO_NAME.get(self.current_language))
         self.name_input = Entry(self.add_video_window, width=30)
 
-        self.resolution_label = Label(self.add_video_window, text="Resolução: ")
+        self.resolution_label = Label(self.add_video_window, text=VIDEO_RESOLUTION.get(self.current_language))
         self.option = StringVar(self.add_video_window)
         self.resolution_input = OptionMenu(self.add_video_window, self.option, "240p", "480p", "720p")
         self.resolution_input.grid(sticky="W", row=1, column=1, pady=10, padx=10)
 
-        self.file_label = Label(self.add_video_window, text="Arquivo: ")
+        self.file_label = Label(self.add_video_window, text=VIDEO_FILE.get(self.current_language))
         self.path_input = Entry(self.add_video_window, width=30)
 
-        self.choose_file_button = Button(self.add_video_window, text='Escolher Arquivo',
+        self.choose_file_button = Button(self.add_video_window, text=CHOOSE_FILE.get(self.current_language),
                                          command=lambda: self.choose_file())
         self.add_video_output_label = Label(self.add_video_window, text="")
 
@@ -202,7 +224,7 @@ class ServerGUI:
         self.configure_add_video_window()
 
     def configure_add_video_window(self):
-        self.add_video_window.title('Adicionar Vídeo')
+        self.add_video_window.title(ADD_VIDEO.get(self.current_language))
         self.add_video_window.geometry('400x220')
         self.add_video_window.configure(background='#b3b3b3')
 
@@ -224,7 +246,7 @@ class ServerGUI:
         self.file_label.configure(background='#b3b3b3')
         self.path_input.grid(row=2, column=1, columnspan=2, pady=10, padx=10)
         if self.transaction == "CREATE":
-            self.path_input.insert(0, ' Nenhum arquivo selecionado')
+            self.path_input.insert(0, NO_FILE.get(self.current_language))
         elif self.transaction == "UPDATE":
             self.path_input.insert(0, self.path)
         self.path_input.configure(state=DISABLED)
@@ -234,11 +256,11 @@ class ServerGUI:
         self.add_video_output_label.configure(background='#b3b3b3')
 
         if self.transaction == "CREATE":
-            button_text = 'Adicionar Vídeo'
+            button_text = ADD_VIDEO.get(self.current_language)
             self.add_or_edit_video_button = Button(self.add_video_window, text=button_text,
                                                    command=lambda: self.save_video())
         elif self.transaction == "UPDATE":
-            button_text = 'Atualizar Vídeo'
+            button_text = UPDATE_VIDEO.get(self.current_language)
             self.add_or_edit_video_button = Button(self.add_video_window, text=button_text,
                                                    command=lambda: self.save_video())
         self.add_or_edit_video_button.grid(row=3, column=1, pady=5)
@@ -257,13 +279,13 @@ class ServerGUI:
         if self.name and self.resolution and self.path and self.path != ' Nenhum arquivo selecionado':
             return True
         elif not self.name:
-            self.add_video_output_label.config(text='Nome não pode ficar em branco!', foreground='red')
-        elif self.path == ' Nenhum arquivo selecionado' or not self.path:
-            self.add_video_output_label.config(text='Arquivo não pode ficar em branco!', foreground='red')
+            self.add_video_output_label.config(text=NAME_BLANK.get(self.current_language), foreground='red')
+        elif self.path == NO_FILE.get(self.current_language) or not self.path:
+            self.add_video_output_label.config(text=FILE_BLANK.get(self.current_language), foreground='red')
         elif not self.resolution:
-            self.add_video_output_label.config(text='Resolução não pode ficar em branco!', foreground='red')
+            self.add_video_output_label.config(text=RESOLUTION_BLANK.get(self.current_language), foreground='red')
         else:
-            self.add_video_output_label.config(text='Erro ao adicionar vídeo!', foreground='red')
+            self.add_video_output_label.config(text=ERROR_ADD_VIDEO.get(self.current_language), foreground='red')
         return False
 
     def save_video(self):
@@ -285,17 +307,39 @@ class ServerGUI:
             self.progress_bar.destroy()
             if self.transaction == "CREATE":
                 create_video_transaction(self.name, self.resolution, final_path)
-                self.add_video_output_label.config(text='Vídeo adicionado com sucesso!', foreground='green')
+                self.add_video_output_label.config(text=VIDEO_ADDED.get(self.current_language), foreground='green')
             elif self.transaction == "UPDATE" and self.id_video:
                 if (self.name != old_name) or (self.resolution != old_resolution):
                     os.remove(old_path)
                 update_videos_transaction(self.id_video, self.name, self.resolution, final_path)
-                self.add_video_output_label.config(text='Vídeo atualizado com sucesso!', foreground='green')
+                self.add_video_output_label.config(text=VIDEO_UPDATED.get(self.current_language), foreground='green')
             self.add_or_edit_video_button.destroy()
-            quit_button = Button(self.add_video_window, text='Fechar', command=lambda: self.add_video_window.destroy())
+            quit_button = Button(self.add_video_window, text=CLOSE.get(self.current_language), command=lambda: self.add_video_window.destroy())
             quit_button.grid(row=3, column=1, pady=5)
             self.refresh_list_videos()
 
+    def change_language(self, language):
+        if self.current_language == language:
+            pass
+        else:
+            if self.current_language == "EN":
+                self.current_language = "PT"
+                self.language_button.configure(bg="orange", state=NORMAL, disabledforeground="#faddc8")
+                self.language_button2.configure(bg="#b36200", state=DISABLED, foreground="white")
+
+            elif self.current_language == "PT":
+                self.current_language = "EN"
+                self.language_button.configure(bg="#b36200", state=DISABLED, foreground="white")
+                self.language_button2.configure(bg="orange", state=NORMAL, disabledforeground="#faddc8")
+
+            self.play_button.configure(text=PLAY_VIDEO.get(self.current_language))
+            self.add_video_button.configure(text=ADD_VIDEO.get(self.current_language))
+            self.edit_video_button.configure(text=UPDATE_VIDEO.get(self.current_language))
+            self.remove_video_button.configure(text=REMOVE_VIDEO.get(self.current_language))
+
+            self.table_view.heading("Vídeo", text=VIDEO.get(self.current_language), anchor=CENTER)
+            self.table_view.heading("Qualidade", text=RESOLUTION.get(self.current_language), anchor=CENTER)
+            self.table_view.heading("Caminho", text=PATH.get(self.current_language), anchor=CENTER)
 
 def main():
     server_gui = ServerGUI()
