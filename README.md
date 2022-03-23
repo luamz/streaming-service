@@ -5,6 +5,8 @@ The app consists of a Service Manager and a Streaming Server. The Service Manage
 
 The application has guest and premium users. Premium users can play videosfor themselves and also create groups for watch parties, they are able to add/remove other users to the group and simultaneously play videos for all of them.
 
+Application available in **Engligh** and **Portuguese**
+
 ## Requirements
 The application was developed with Python (3.6)
 
