@@ -1,5 +1,9 @@
-# Streaming Service
+# Biting Wire - Streaming Service
+Streaming Service Application developed in Python3 by Igor Cruz, Luam Souza and Lucas Fauster.
 
+The app consists of a Service Manager and a Streaming Server. The Service Manager is responsible for coordinating messages and operations, it communicates with the clients and the streaming server through a TCP connection. The Streaming Server is responsible for listing videos and sending them to the clients through a UDP connection.
+
+The application has guest and premium users. Premium users can play videosfor themselves and also create groups for watch parties, they are able to add/remove other users to the group and simultaneously play videos for all of them.
 
 ## Requirements
 The application was developed with Python (3.6)
@@ -33,8 +37,7 @@ The application was developed with Python (3.6)
     </tr> 
 </table>
 
-Libraries can be downloaded via Pip3 and OpenCV can be installed by running ```sudo apt-get install python3.6-tk```
- - Bibliotecas Nativas do Python:
+Most libraries can be downloaded via Pip3 and OpenCV can be installed by running ```sudo apt-get install python3.6-tk```
         
 ## Running
 ### As User
