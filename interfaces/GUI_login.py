@@ -96,7 +96,8 @@ class LoginGUI:
             self.window.title(WELCOME.get(self.current_language))
             self.window.geometry("750x510")
             self.login_frame.destroy()
-            self.client_gui = ClientGUI(self.window, self.client)
+            self.language_frame.destroy()
+            self.client_gui = ClientGUI(self.window, self.client, self.current_language)
             self.client_gui.render()
             self.client.log_out()
 
