@@ -3,7 +3,7 @@ Streaming Service Application developed in Python3 by Igor Cruz, Luam Souza and 
 
 The app consists of a Service Manager and a Streaming Server. The Service Manager is responsible for coordinating messages and operations, it communicates with the clients and the streaming server through a TCP connection. The Streaming Server is responsible for listing videos and sending them to the clients through a UDP connection.
 
-The application has guest and premium users. Premium users can play videosfor themselves and also create groups for watch parties, they are able to add/remove other users to the group and simultaneously play videos for all of them.
+The application has guest and premium users. Premium users can play videosfor themselves and also create groups for watch parties, they are able to add/remove other users to the group and simultaneously play videos for all of them. Guest users can take part in a group.
 
 Application available in **Engligh** and **Portuguese**
 
