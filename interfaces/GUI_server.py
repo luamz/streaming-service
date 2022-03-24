@@ -102,9 +102,9 @@ class ServerGUI:
         self.table_view.column("Caminho", anchor=CENTER, width=250)
         self.table_view.heading("#0", text="", anchor=CENTER)
         self.table_view.heading("ID", text="ID", anchor=CENTER)
-        self.table_view.heading("Vídeo", text="Vídeo", anchor=CENTER)
-        self.table_view.heading("Qualidade", text="Qualidade", anchor=CENTER)
-        self.table_view.heading("Caminho", text="Caminho", anchor=CENTER)
+        self.table_view.heading("Vídeo", text=VIDEO.get(self.current_language), anchor=CENTER)
+        self.table_view.heading("Qualidade", text=RESOLUTION.get(self.current_language), anchor=CENTER)
+        self.table_view.heading("Caminho", text=PATH.get(self.current_language), anchor=CENTER)
         self.table_view.tag_configure('oddrow', background="white")
         self.table_view.tag_configure('evenrow', background="orange")
 
