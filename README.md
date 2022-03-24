@@ -57,3 +57,52 @@ To run the application you need to do the following steps:
 To run the admin application you just need to run
 ``` python3 janelas/GUI_server.py ```
 to start the Admin Interface
+
+## Navigation
+<table>
+    <tr>
+        <td> 
+          <p align="center" style="padding: 10px">
+            <img alt="Forwarding" src="https://user-images.githubusercontent.com/50959073/159812515-4452bc23-a36f-4870-bed1-bab4355e6437.png"                          width="300">
+            <br>
+            <em>Login Page</em>
+          </p> 
+        </td>
+        <td> 
+          <p align="center">
+            <img alt="Routing" src="https://user-images.githubusercontent.com/50959073/159812696-6a5037c8-728e-4495-a956-9d11d68cb673.png" width="500">
+            <br>
+            <em>Home Page</em>
+          </p> 
+        </td>
+    </tr>
+     <tr>
+        <td> 
+          <p align="center" style="padding: 10px">
+            <img alt="Forwarding" src="https://user-images.githubusercontent.com/50959073/159812851-0bf401f4-bc0e-4990-a506-9da57714257c.png"                          width="500">
+            <br>
+            <em>Creating Group</em>
+          </p> 
+        </td>
+        <td> 
+          <p align="center">
+            <img alt="Routing" src="https://user-images.githubusercontent.com/50959073/160010497-a18103fc-d714-42bb-b067-ae11b8775a8e.png" width="500">
+            <br>
+            <em>Adding user to group</em>
+          </p> 
+        </td>
+    </tr>
+    
+</table>
+
+<p align="center">
+    <img alt="Routing" src="https://user-images.githubusercontent.com/50959073/160010308-0d7eb96c-7def-46de-a86d-a5928afee369.png" width="800">
+    <br>
+    <em>Playing a video simultaneously to two users</em>
+</p> 
+
+<p align="center">
+    <img alt="Routing" src="https://user-images.githubusercontent.com/50959073/159813592-68efdcd5-70f9-40e8-866e-552b652e6ff1.png" width="600">
+    <br>
+    <em>Admin Interface</em>
+</p> 
