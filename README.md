@@ -51,7 +51,7 @@ To run the application you need to do the following steps:
 ``` python3 streaming_server/serverUDP.py ```
 
 3. Now you can run as many User Interfaces as you would like with: 
-``` python3 janelas/GUI_login.py ```
+``` python3 interfaces/GUI_login.py ```
 
 ### As Admin
 To run the admin application you just need to run
