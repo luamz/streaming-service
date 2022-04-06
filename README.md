@@ -39,7 +39,7 @@ The application was developed with Python (3.6)
     </tr> 
 </table>
 
-Most libraries can be downloaded via Pip3 and OpenCV can be installed by running ```sudo apt-get install python3.6-tk```
+Most libraries can be downloaded via Pip3 and Tkinter can be installed by running ```sudo apt-get install python3.6-tk```
         
 ## Running
 ### As User
